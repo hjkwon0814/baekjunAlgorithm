@@ -9,6 +9,7 @@ public class choragi {
         int testcase = sc.nextInt();
         int area = sc.nextInt();
         int armyCount = sc.nextInt();
+        int answer = 0;
         List<AreaInfo> areaInfoList = new ArrayList<AreaInfo>();
         while(sc.hasNextInt()) {
         	AreaInfo areaInfo = new AreaInfo();
@@ -21,38 +22,36 @@ public class choragi {
         	areaInfoList.add(areaInfo);
         }
         
-        for(int i = 1; i <= area*2; i++) {
-        	if(i % area == 1 && areaInfoList.get(i-1).getLine() == 0) {
-        		List<Integer> checkList = new ArrayList<Integer>();
-        		checkList.add(i+1);
-        		checkList.add(i+8);
-        		checkList.add(i+area-1);
-        		for(Integer index : checkList) {
-        			if(!areaInfoList.get(i).getIsChecked()) {
-    					break;
-    				}
-        			if(armyCount >= areaInfoList.get(i).getEnemyCount() + areaInfoList.get(index).getEnemyCount()) {
-        				areaInfoList.get(i).setIsChecked(true);
-        				areaInfoList.get(index).setIsChecked(true);
-        			}
-        		}
-        	} else if (i % area == 0 && areaInfoList.get(i-1).getLine() == 0) {
-        		List<Integer> checkList = new ArrayList<Integer>();
-        		checkList.add(i-1);
-        		checkList.add(i+8);
-        		checkList.add(i-area+1);
-        	} else if(i % area == 1 && areaInfoList.get(i-1).getLine() == 1){
-        		List<Integer> checkList = new ArrayList<Integer>();
-        		checkList.add(i+1);
-        		checkList.add(i+area-1);
-        	} else if(i % area == 0 && areaInfoList.get(i-1).getLine() == 1) {
-        		List<Integer> checkList = new ArrayList<Integer>();
-        		checkList.add(i-1);
-        		checkList.add(i-area+1);
-        	} else {
-        		
-        	}
+        for(int j = 0; j<testcase; j++) {
+        	for(int i = 0; i <= (area*2)-1; i++) {
+        		int sideNum = ((i + 1) % area) == 0 ? (i+1) - area : (i + 1);
+            	if(areaInfoList.get(i).getLine() == 1) {            		
+            		if(!areaInfoList.get(i).getIsChecked() && armyCount >= areaInfoList.get(i).getEnemyCount() + areaInfoList.get(i + area).getEnemyCount()) {
+            			areaInfoList.get(i).setIsChecked(true);
+            			areaInfoList.get(i+area).setIsChecked(true);
+            			answer++; 
+            		}
+            		
+            		if(!areaInfoList.get(i).getIsChecked() && !areaInfoList.get(sideNum).getIsChecked() && armyCount >= areaInfoList.get(i).getEnemyCount() + areaInfoList.get(sideNum).getEnemyCount()) {
+            			areaInfoList.get(i).setIsChecked(true);
+            			areaInfoList.get(sideNum).setIsChecked(true);
+            			answer++;
+            		}
+            	} else {
+            		if(!areaInfoList.get(i).getIsChecked() && !areaInfoList.get(sideNum).getIsChecked() && armyCount >= areaInfoList.get(i).getEnemyCount() + areaInfoList.get(sideNum).getEnemyCount()) {
+            			areaInfoList.get(i).setIsChecked(true);
+            			areaInfoList.get(sideNum).setIsChecked(true);
+            			answer++;
+            		}
+            	}
+            }
+        	
+        	answer = ((area - answer) * 2) + answer;
+        	System.out.println(answer);
+        	
         }
+        
+        
         
         
 
