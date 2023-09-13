@@ -67,6 +67,8 @@ class AreaInfo {
 	
 	private int line;
 	
+	private List<Integer> nearAreaList = new ArrayList<>();
+	
 	public void setIsChecked(boolean isChecked) {
 		this.isChecked = isChecked;
 	}
@@ -79,6 +81,10 @@ class AreaInfo {
 		this.line = line;
 	}
 	
+	public void setNearAreaList(Integer areaNumber) {
+		this.nearAreaList.add(areaNumber);
+	}
+	
 	public boolean getIsChecked() {
 		return this.isChecked;
 	}
@@ -89,5 +95,9 @@ class AreaInfo {
 	
 	public int getLine() {
 		return this.line;
+	}
+	
+	public List<Integer> getNearAreaList() {
+		return this.nearAreaList;
 	}
 }
